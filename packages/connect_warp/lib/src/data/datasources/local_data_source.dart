@@ -32,8 +32,11 @@ class ProcessDataSource implements ILocalDataSource {
       final rs = await Process.run('warp-cli', ['warp-stats']);
       final result = rs.stdout.toString();
       if (result.startsWith('Error')) {
+        log('No conecto');
         return false;
       } else {
+        log('Se conecto');
+
         return true;
       }
     } catch (e) {

@@ -13,19 +13,28 @@ class SwitcherWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ScopedReader watch) {
     final switcherResultState = watch(switcherResultProvider);
-    return Switcher(
-      value: switcherResultState.state,
-      size: SwitcherSize.large,
-      enabledSwitcherButtonRotate: true,
-      iconOn: Icons.cloud_done,
-      colorOff: Colors.blueGrey.withOpacity(0.3),
-      colorOn: Colors.yellow,
-      // onTap: () => watch(connectWarpNotifierProvider.notifier)
-      //     .connectWarp(actionState.state),
-      onChanged: (changeValue) {
-        switcherResultState.state = changeValue;
-        watch(connectWarpNotifierProvider.notifier).connectWarp();
-      },
+    return Container(
+      width: 100,
+      decoration: BoxDecoration(
+          color: switcherResultState.state ? Colors.deepOrange : Colors.white,
+          borderRadius: BorderRadius.circular(36)),
+      child: Transform.scale(
+        scale: 1.2,
+        child: Switch(
+          activeTrackColor: Colors.deepOrange,
+          activeColor: Colors.white,
+          value: watch(connectWarpNotifierProvider).when(
+              initial: () => false,
+              connecting: () => false,
+              connected: (connect) =>
+                  connect ? switcherResultState.state : false,
+              error: (error) => false),
+          onChanged: (changeValue) {
+            switcherResultState.state = changeValue;
+            watch(connectWarpNotifierProvider.notifier).connectWarp();
+          },
+        ),
+      ),
     );
   }
 }
