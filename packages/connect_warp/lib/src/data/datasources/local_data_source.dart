@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:errors/errors.dart';
@@ -13,6 +14,7 @@ class ProcessDataSource implements ILocalDataSource {
   @override
   Future<bool> runProcess(String action) async {
     try {
+      log('ProcessDataSource $action');
       await Process.run('warp-cli', [action]);
 
       return warpStats();
@@ -26,6 +28,7 @@ class ProcessDataSource implements ILocalDataSource {
     try {
       final rs = await Process.run('warp-cli', ['warp-stats']);
       final result = rs.stdout.toString();
+      log(result);
       if (result.startsWith('Error')) {
         return false;
       } else {

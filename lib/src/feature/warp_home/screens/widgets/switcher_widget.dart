@@ -1,54 +1,33 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:switcher/core/switcher_size.dart';
 import 'package:switcher/switcher.dart';
-import 'package:warp_desktop/src/core/utils.dart';
+import 'package:warp_desktop/src/feature/warp_home/logic/connect_warp/connect_warp_provider.dart';
 
-class SwitcherWidget extends StatelessWidget {
+class SwitcherWidget extends ConsumerWidget {
   const SwitcherWidget({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ScopedReader watch) {
+    final switcherResultState = watch(switcherResultProvider);
+    final actionState = watch(actionProvider);
     return Switcher(
-      value: switcherResult,
+      value: switcherResultState.state,
       size: SwitcherSize.large,
       enabledSwitcherButtonRotate: true,
       iconOn: Icons.cloud_done,
       colorOff: Colors.blueGrey.withOpacity(0.3),
       colorOn: Colors.yellow,
-      onTap: () => runProccess(switcherResult),
-      onChanged: (state) {
-        switcherResult = !switcherResult;
+      // onTap: () => watch(connectWarpNotifierProvider.notifier)
+      //     .connectWarp(actionState.state),
+      onChanged: (changeValue) {
+        switcherResultState.state = changeValue;
+        log('OnChanged $changeValue  switcherResultState ${switcherResultState.state} actionState ${actionState.state}');
+        watch(connectWarpNotifierProvider.notifier).connectWarp();
       },
     );
-  }
-
-  Future<bool> runProccess(bool switcherResult) async {
-    var value = 'connect';
-    if (switcherResult) {
-      value = 'disconnect';
-    }
-    Process.run('warp-cli', [value]);
-    bool successConnect = await getStatusWarp();
-
-    print(successConnect);
-    return successConnect;
-  }
-
-  Future<bool> getStatusWarp() async {
-    bool successConnect = false;
-    await Future.delayed(Duration(seconds: 3));
-
-    ProcessResult rs = await Process.run('warp-cli', ['status']);
-    String result = rs.stdout.toString().split(' ')[2].trim();
-    print(result);
-
-    if (result == 'Connected') {
-      successConnect = true;
-    }
-    print('El resultado de  la  conexion  es: $successConnect');
-
-    return successConnect;
   }
 }
