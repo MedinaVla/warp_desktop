@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const double defaultPadding = 20;
+const double defaultPadding = 30;
 const colorizeColors = [
   Colors.cyan,
   Colors.indigo,
