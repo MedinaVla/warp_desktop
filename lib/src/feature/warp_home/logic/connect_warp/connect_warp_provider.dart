@@ -30,12 +30,9 @@ final actionProvider = StateProvider<String>((ref) {
   final switcher = ref.watch(switcherResultProvider).state;
   switch (switcher) {
     case true:
-      log('ActionProvider true');
       return 'connect';
 
     default:
-      log('ActionProvider false');
-
       return 'disconnect';
   }
 });

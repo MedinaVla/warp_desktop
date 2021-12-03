@@ -13,7 +13,6 @@ class SwitcherWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ScopedReader watch) {
     final switcherResultState = watch(switcherResultProvider);
-    final actionState = watch(actionProvider);
     return Switcher(
       value: switcherResultState.state,
       size: SwitcherSize.large,
@@ -25,7 +24,6 @@ class SwitcherWidget extends ConsumerWidget {
       //     .connectWarp(actionState.state),
       onChanged: (changeValue) {
         switcherResultState.state = changeValue;
-        log('OnChanged $changeValue  switcherResultState ${switcherResultState.state} actionState ${actionState.state}');
         watch(connectWarpNotifierProvider.notifier).connectWarp();
       },
     );

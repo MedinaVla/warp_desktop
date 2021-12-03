@@ -27,6 +27,7 @@ class ProcessDataSource implements ILocalDataSource {
   Future<bool> warpStats() async {
     try {
       final rs = await Process.run('warp-cli', ['warp-stats']);
+      log(rs.stdout);
       final result = rs.stdout.toString();
       log(result);
       if (result.startsWith('Error')) {

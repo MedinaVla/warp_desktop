@@ -13,7 +13,6 @@ class ConnectWarpNotifier extends StateNotifier<ConnectWarpState> {
   final String _action;
 
   Future<void> connectWarp() async {
-    log('Notifier $_action');
     state = ConnectWarpState.connecting();
 
     final result = await _useCase(ConnectWarpParams(actionParams: _action));
