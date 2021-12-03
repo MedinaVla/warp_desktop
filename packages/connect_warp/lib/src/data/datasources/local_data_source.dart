@@ -1,7 +1,10 @@
 abstract class ILocalDataSource {
-  // TODO: Define datasource methods
+  Future<bool> runProcess(String action);
 }
 
 class LocalDataSource implements ILocalDataSource {
-  // TODO: Implement datasource methods with specific dependencies
+  @override
+  Future<bool> runProcess(String action) {
+    throw UnimplementedError();
+  }
 }
