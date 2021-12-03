@@ -16,6 +16,9 @@ class ProcessDataSource implements ILocalDataSource {
     try {
       log('ProcessDataSource $action');
       await Process.run('warp-cli', [action]);
+      if (action == 'connect') {
+        await Future<dynamic>.delayed(const Duration(seconds: 2));
+      }
 
       return warpStats();
     } catch (e) {
@@ -27,9 +30,7 @@ class ProcessDataSource implements ILocalDataSource {
   Future<bool> warpStats() async {
     try {
       final rs = await Process.run('warp-cli', ['warp-stats']);
-      log(rs.stdout);
       final result = rs.stdout.toString();
-      log(result);
       if (result.startsWith('Error')) {
         return false;
       } else {
