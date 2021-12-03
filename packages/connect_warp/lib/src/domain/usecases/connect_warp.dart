@@ -5,7 +5,7 @@ import 'package:dartz/dartz.dart';
 import 'package:errors/errors.dart';
 
 ///Connect  Warp
-class ConnectWarp extends UseCase<String, ConnectWarpParams> {
+class ConnectWarp extends UseCase<bool, ConnectWarpParams> {
   ///UseCase  constructor
   ConnectWarp({required this.repository});
 
@@ -13,7 +13,7 @@ class ConnectWarp extends UseCase<String, ConnectWarpParams> {
   final IConnectWarpRepository repository;
 
   /// Callable class method
-  Future<Either<Failure, String>> call(ConnectWarpParams params) async {
+  Future<Either<Failure, bool>> call(ConnectWarpParams params) async {
     return repository.runProcess(params.actionParams);
   }
 }
