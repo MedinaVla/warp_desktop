@@ -9,6 +9,8 @@ const colorizeColors = [
   Colors.red,
 ];
 
+enum TypeToShow { color, afirmation }
+
 final colorizeTextStyle = TextStyle(
     fontSize: 60.0,
     fontWeight: FontWeight.w800,

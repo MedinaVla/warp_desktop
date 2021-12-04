@@ -7,4 +7,12 @@ void main() {
   runApp(ProviderScope(
     child: WarpDesktop(),
   ));
+  doWhenWindowReady(() {
+    final win = appWindow;
+    final initialSize = Size(400, 500);
+    win.minSize = initialSize;
+    win.maxSize = initialSize;
+    win.position = Offset(400, 100);
+    win.show();
+  });
 }
