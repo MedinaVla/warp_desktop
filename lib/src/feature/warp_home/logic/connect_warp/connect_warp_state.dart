@@ -2,6 +2,10 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'connect_warp_state.freezed.dart';
 
+extension ConnectingState on ConnectWarpState {
+  bool get isConnectign => this is _Connecting;
+}
+
 @freezed
 abstract class ConnectWarpState with _$ConnectWarpState {
   /// Initial/default state

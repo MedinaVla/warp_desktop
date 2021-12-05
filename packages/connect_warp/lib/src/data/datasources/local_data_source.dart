@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:errors/errors.dart';
 
 ///Interface  DataSource
+// ignore: one_member_abstracts
 abstract class ILocalDataSource {
   ///Run  Process
   Future<bool> runProcess(String action);
@@ -20,14 +21,14 @@ class ProcessDataSource implements ILocalDataSource {
         await Future<dynamic>.delayed(const Duration(seconds: 2));
       }
 
-      return warpStats();
+      return getWarpStatus();
     } catch (e) {
       throw ServerException();
     }
   }
 
   ///Return true  is  connected
-  Future<bool> warpStats() async {
+  Future<bool> getWarpStatus() async {
     try {
       final rs = await Process.run('warp-cli', ['warp-stats']);
       final result = rs.stdout.toString();
@@ -36,6 +37,24 @@ class ProcessDataSource implements ILocalDataSource {
         return false;
       } else {
         log('Se conecto');
+
+        return true;
+      }
+    } catch (e) {
+      throw ServerException();
+    }
+  }
+
+  ///Return true  is  connected
+  Future<bool> getConnectionStatus() async {
+    try {
+      final rs = await Process.run('warp-cli', ['warp-stats']);
+      final result = rs.stdout.toString();
+      if (result.startsWith('Error')) {
+        log('getConnectionStatus No conecto');
+        return false;
+      } else {
+        log('getConnectionStatus dSe conecto');
 
         return true;
       }

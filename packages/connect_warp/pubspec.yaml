@@ -6,16 +6,18 @@ environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
+  dartz:
+
   # Scope Packages
   errors:
     git:
       url: git://github.com/NoScopeDevs/errors
+  freezed_annotation:
+      # Scope Packages
   network_manager:
     git:
       url: git://github.com/NoScopeDevs/network_manager
 
-  dartz:
-  freezed_annotation:
   path:
 
 dev_dependencies:

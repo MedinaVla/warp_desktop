@@ -18,7 +18,7 @@ class TextWarpWidget extends StatelessWidget {
                     totalRepeatCount: 1000,
                     animatedTexts: [
                       ColorizeAnimatedText(
-                        '1.1.1.1',
+                        'WARP VPN',
                         textStyle: colorizeTextStyle,
                         colors: colorizeColors,
                         speed: const Duration(seconds: 1),

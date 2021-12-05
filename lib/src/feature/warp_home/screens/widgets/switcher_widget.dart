@@ -1,10 +1,5 @@
-import 'dart:developer';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:switcher/core/switcher_size.dart';
-import 'package:switcher/switcher.dart';
 import 'package:warp_desktop/src/core/utils.dart';
 import 'package:warp_desktop/src/feature/warp_home/logic/connect_warp/connect_warp_provider.dart';
 
@@ -27,6 +22,9 @@ class SwitcherWidget extends ConsumerWidget {
           value: watchConnection(
               watch, switcherResultState, TypeToShow.afirmation),
           onChanged: (changeValue) {
+            if (watch(connectWarpNotifierProvider).isConnectign) {
+              return;
+            }
             switcherResultState.state = changeValue;
             watch(connectWarpNotifierProvider.notifier).connectWarp();
           },
@@ -42,7 +40,7 @@ class SwitcherWidget extends ConsumerWidget {
         return watch(connectWarpNotifierProvider).when(
             initial: () => false,
             connecting: () => false,
-            connected: (connect) => connect ? switcherResultState.state : false,
+            connected: (connect) => connect ? true : false,
             error: (error) => false);
       case TypeToShow.color:
         return watch(connectWarpNotifierProvider).when(

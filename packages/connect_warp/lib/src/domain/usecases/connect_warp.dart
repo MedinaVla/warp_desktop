@@ -13,6 +13,7 @@ class ConnectWarp extends UseCase<bool, ConnectWarpParams> {
   final IConnectWarpRepository repository;
 
   /// Callable class method
+  @override
   Future<Either<Failure, bool>> call(ConnectWarpParams params) async {
     return repository.runProcess(params.actionParams);
   }

@@ -4,18 +4,32 @@ part of 'connect_warp_provider.dart';
 class ConnectWarpNotifier extends StateNotifier<ConnectWarpState> {
   /// Base constructor expects StateNotifier use_cases to
   /// read its usecases and also defines inital state
-  ConnectWarpNotifier({required ConnectWarp useCase, required String action})
-      : _useCase = useCase,
+  ConnectWarpNotifier(
+      {required ConnectWarp connectOrDisconnectWarpUseCase,
+      required GetConnectionStatus getConnectionStatusUseCase,
+      required String action})
+      : _connectOrDisconnectWarpUseCase = connectOrDisconnectWarpUseCase,
+        _getConnectionStatusUseCase = getConnectionStatusUseCase,
         _action = action,
-        super(ConnectWarpState.initial());
+        super(ConnectWarpState.initial()) {
+    connectWarp();
+  }
 
-  final ConnectWarp _useCase;
+  final ConnectWarp _connectOrDisconnectWarpUseCase;
+  final GetConnectionStatus _getConnectionStatusUseCase;
   final String _action;
 
   Future<void> connectWarp() async {
     state = ConnectWarpState.connecting();
 
-    final result = await _useCase(ConnectWarpParams(actionParams: _action));
+    final result = await _connectOrDisconnectWarpUseCase(
+        ConnectWarpParams(actionParams: _action));
+    result.fold((error) => state = ConnectWarpState.error(),
+        (connect) => state = ConnectWarpState.connected(connect));
+  }
+
+  Future<void> getConnectionStatusCall() async {
+    final result = await _getConnectionStatusUseCase();
     result.fold((error) => state = ConnectWarpState.error(),
         (connect) => state = ConnectWarpState.connected(connect));
   }
