@@ -15,13 +15,13 @@ class TextWarpWidget extends StatelessWidget {
                 padding: EdgeInsets.all(defaultPadding),
                 child: SizedBox(
                   child: AnimatedTextKit(
-                    totalRepeatCount: 1000,
+                    repeatForever: true,
                     animatedTexts: [
                       ColorizeAnimatedText(
                         'WARP VPN',
                         textStyle: colorizeTextStyle,
                         colors: colorizeColors,
-                        speed: const Duration(seconds: 1),
+                        speed: const Duration(milliseconds: 2000),
                       ),
                     ],
                     isRepeatingAnimation: true,

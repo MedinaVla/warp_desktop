@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gradient_colors/flutter_gradient_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:warp_desktop/src/core/utils.dart';
 import 'package:warp_desktop/src/feature/warp_home/logic/connect_warp/connect_warp_provider.dart';
@@ -12,14 +13,20 @@ class SwitcherWidget extends ConsumerWidget {
     return Container(
       width: 100,
       decoration: BoxDecoration(
-          color: watchConnection(watch, switcherResultState, TypeToShow.color),
-          borderRadius: BorderRadius.circular(36)),
+        borderRadius: BorderRadius.circular(36),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: getAfirmationOrColorByWatchConnection(
+              watch, switcherResultState, TypeToShow.color),
+        ),
+      ),
       child: Transform.scale(
-        scale: 1.2,
+        scale: 1.32,
         child: Switch(
-          activeTrackColor: Colors.deepOrange,
+          activeTrackColor: Colors.transparent,
           activeColor: Colors.white,
-          value: watchConnection(
+          value: getAfirmationOrColorByWatchConnection(
               watch, switcherResultState, TypeToShow.afirmation),
           onChanged: (changeValue) {
             if (watch(connectWarpNotifierProvider).isConnectign) {
@@ -33,8 +40,8 @@ class SwitcherWidget extends ConsumerWidget {
     );
   }
 
-  watchConnection(ScopedReader watch, StateController<bool> switcherResultState,
-      TypeToShow typeToShow) {
+  getAfirmationOrColorByWatchConnection(ScopedReader watch,
+      StateController<bool> switcherResultState, TypeToShow typeToShow) {
     switch (typeToShow) {
       case TypeToShow.afirmation:
         return watch(connectWarpNotifierProvider).when(
@@ -44,10 +51,11 @@ class SwitcherWidget extends ConsumerWidget {
             error: (error) => false);
       case TypeToShow.color:
         return watch(connectWarpNotifierProvider).when(
-            initial: () => Colors.grey,
-            connecting: () => Colors.white,
-            connected: (connect) => connect ? Colors.deepOrange : Colors.grey,
-            error: (error) => Colors.deepOrange);
+            initial: () => GradientColors.grey,
+            connecting: () => GradientColors.white,
+            connected: (connect) =>
+                connect ? GradientColors.sunrise : GradientColors.grey,
+            error: (error) => GradientColors.sunrise);
 
       default:
     }

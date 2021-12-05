@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:warp_desktop/src/feature/warp_home/screens/widgets/switcher_widget.dart';
 import 'package:warp_desktop/src/feature/warp_home/screens/widgets/text_connection_widget.dart';
+import 'package:warp_desktop/src/feature/warp_home/screens/widgets/text_info_version_widget.dart';
 import 'package:warp_desktop/src/feature/warp_home/screens/widgets/text_warp_widget.dart';
 
 class HomePage extends StatelessWidget {
@@ -9,7 +10,12 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [TextWarpWidget(), SwitcherWidget(), TextConecctionWidget()],
+      children: [
+        TextWarpWidget(),
+        SwitcherWidget(),
+        TextConecctionWidget(),
+        TextInfoVersion()
+      ],
     );
   }
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 const double defaultPadding = 30;
 const colorizeColors = [
@@ -23,3 +25,9 @@ final Shader linearGradient = LinearGradient(
 bool switcherResult = false;
 var backgroundStartColor = Color(0xFFFFD500);
 var backgroundEndColor = Color(0xFFF6A00C);
+
+final getVersionProvider = FutureProvider<String>((_) async {
+  PackageInfo packageInfo = await PackageInfo.fromPlatform();
+  String version = packageInfo.version;
+  return version;
+});
