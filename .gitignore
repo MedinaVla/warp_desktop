@@ -44,3 +44,7 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+*.snap
+snap/gui/warp-desktop.desktop
+snap/gui/warp-desktop.png
+snap/snapcraft.yaml
